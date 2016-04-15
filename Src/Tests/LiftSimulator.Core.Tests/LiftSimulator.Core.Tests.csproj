@@ -59,8 +59,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LiftLocatorTestFixture.cs" />
     <Compile Include="LiftRequestTestFixture.cs" />
     <Compile Include="SimulationRunnerTestFixture.cs" />
+    <Compile Include="TestDataHelper.cs" />
     <Compile Include="XUnitTestFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

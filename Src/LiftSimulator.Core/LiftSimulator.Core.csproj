@@ -40,7 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ILiftLocator.cs" />
     <Compile Include="ISimulationRunner.cs" />
+    <Compile Include="LiftLocator.cs" />
     <Compile Include="Models\Lift.cs" />
     <Compile Include="Models\LiftDirection.cs" />
     <Compile Include="Models\LiftRequest.cs" />
@@ -48,6 +50,7 @@
     <Compile Include="SimulationContext.cs" />
     <Compile Include="SimulationResults.cs" />
     <Compile Include="SimulationRunner.cs" />
+    <Compile Include="TickSummary.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

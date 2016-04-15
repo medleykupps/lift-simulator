@@ -19,7 +19,7 @@ namespace LiftSimulator.Core
             Lifts = lifts.ToList();
         }
 
-        public IEnumerable<LiftRequest> Requests { get; set; }
+        public IList<LiftRequest> Requests { get; set; }
         public IEnumerable<Lift> Lifts { get; set; }
     }
 }
