@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiftSimulator.Core", "LiftS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiftSimulator", "LiftSimulator\LiftSimulator.csproj", "{4D9BC519-3920-4CA0-9AD2-BC2277A9D870}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{0A92750E-7412-4025-A2E3-C6B0797150BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiftSimulator.Core.Tests", "Tests\LiftSimulator.Core.Tests\LiftSimulator.Core.Tests.csproj", "{78FA5CB5-C084-43DA-B74A-5858CB3D60C2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,8 +25,15 @@ Global
 		{4D9BC519-3920-4CA0-9AD2-BC2277A9D870}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D9BC519-3920-4CA0-9AD2-BC2277A9D870}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D9BC519-3920-4CA0-9AD2-BC2277A9D870}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78FA5CB5-C084-43DA-B74A-5858CB3D60C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78FA5CB5-C084-43DA-B74A-5858CB3D60C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78FA5CB5-C084-43DA-B74A-5858CB3D60C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78FA5CB5-C084-43DA-B74A-5858CB3D60C2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{78FA5CB5-C084-43DA-B74A-5858CB3D60C2} = {0A92750E-7412-4025-A2E3-C6B0797150BE}
 	EndGlobalSection
 EndGlobal
