@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiftSimulator", "LiftSmulator\LiftSimulator.csproj", "{4D9BC519-3920-4CA0-9AD2-BC2277A9D870}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiftSimulator.Core", "LiftSimulator.Core\LiftSimulator.Core.csproj", "{2E7A1AB8-3495-4895-846F-9A2816EDAFDA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4D9BC519-3920-4CA0-9AD2-BC2277A9D870}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D9BC519-3920-4CA0-9AD2-BC2277A9D870}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D9BC519-3920-4CA0-9AD2-BC2277A9D870}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D9BC519-3920-4CA0-9AD2-BC2277A9D870}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E7A1AB8-3495-4895-846F-9A2816EDAFDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E7A1AB8-3495-4895-846F-9A2816EDAFDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E7A1AB8-3495-4895-846F-9A2816EDAFDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E7A1AB8-3495-4895-846F-9A2816EDAFDA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
