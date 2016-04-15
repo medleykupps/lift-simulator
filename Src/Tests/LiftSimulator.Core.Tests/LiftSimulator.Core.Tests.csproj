@@ -59,6 +59,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LiftRequestTestFixture.cs" />
+    <Compile Include="SimulationRunnerTestFixture.cs" />
     <Compile Include="XUnitTestFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
