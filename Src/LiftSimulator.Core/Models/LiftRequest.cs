@@ -15,18 +15,32 @@ namespace LiftSimulator.Core.Models
         public int Tick { get; set; }
         public int? TickComplete { get; set; }
         public int? TickAssigned { get; set; }
+        public int? TickServiced { get; set; }
         public int PeopleCount { get; set; }
         public int SourceFloorNumber { get; set; }
         public int TargetFloorNumber { get; set; }
+
+        public bool IsAssigned()
+        {
+            return TickAssigned.GetValueOrDefault(-1) > -1;
+        }
+
+        public bool IsServiced()
+        {
+            return TickServiced.GetValueOrDefault(-1) > -1;
+        }
 
         public bool IsComplete()
         {
             return TickComplete.GetValueOrDefault(-1) > -1;
         }
 
-        public bool IsAssigned()
+        public static LiftRequest CreateUnassigned(LiftRequest other, int newPeopleCount)
         {
-            return TickAssigned.GetValueOrDefault(-1) > -1;
+            return new LiftRequest(newPeopleCount, other.SourceFloorNumber, other.TargetFloorNumber)
+                   {
+                       Tick = other.Tick
+                   };
         }
     }
 }

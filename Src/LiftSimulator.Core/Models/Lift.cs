@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace LiftSimulator.Core.Models
@@ -16,26 +17,27 @@ namespace LiftSimulator.Core.Models
         public int CurrentFloor { get; private set; }
         public LiftDirection? Direction { get; private set; }
 
-        private readonly IList<LiftRequest> _requests = new List<LiftRequest>();
+        protected readonly IList<LiftRequest> Requests = new List<LiftRequest>();
 
         public void AssignRequest(LiftRequest request, int tick)
         {
             request.TickAssigned = tick;
-            _requests.Add(request);
 
-            Direction = request.TargetFloorNumber < CurrentFloor
+            Requests.Add(request);
+
+            Direction = request.SourceFloorNumber < CurrentFloor
                 ? LiftDirection.Down
                 : LiftDirection.Up;
         }
 
         public IEnumerable<LiftRequest> GetRequests()
         {
-            return _requests;
+            return Requests;
         }
 
         public int GetCapacity()
         {
-            return _requests.Where(req => !req.IsComplete()).Sum(req => req.PeopleCount);
+            return Requests.Where(req => req.IsServiced() && !req.IsComplete()).Sum(req => req.PeopleCount);
         }
 
         public bool IsFull()
@@ -43,7 +45,51 @@ namespace LiftSimulator.Core.Models
             return GetCapacity() >= MaximumCapacity;
         }
 
-        public void Update(int tick)
+        public ServiceResult ServiceAllRequests(int tick)
+        {
+            var result = new ServiceResult();
+
+            foreach (var request in Requests.Where(req => !req.IsComplete()))
+            {
+                if (request.IsServiced() && CurrentFloor == request.TargetFloorNumber)
+                {
+                    // Drop people off at this floor
+                    request.TickComplete = tick;
+                }
+
+                if (request.IsAssigned() && !request.IsServiced() && CurrentFloor == request.SourceFloorNumber)
+                {
+                    // Pick people up from this floor
+
+                    // Check we have enough capacity in the lift, otherwise create a new request for the remaining people
+                    if (GetCapacity() + request.PeopleCount <= MaximumCapacity)
+                    {
+                        ServiceRequest(request, tick);
+                    }
+                    else
+                    {
+                        // Create a new Request for the remaining people
+                        var roomInLift = MaximumCapacity - GetCapacity();
+                        var remaining = LiftRequest.CreateUnassigned(request, request.PeopleCount - roomInLift);
+                        result.Remaining.Add(remaining);
+
+                        request.PeopleCount = roomInLift;
+                        ServiceRequest(request, tick);
+                    }
+                }
+            }
+
+            if (Requests.All(req => req.IsComplete()))
+            {
+                // Stop moving if no more requests;
+                // We could move to the ground floor
+                Direction = null;
+            }
+
+            return result;
+        }
+
+        public void Move()
         {
             if (Direction.HasValue)
             {
@@ -61,22 +107,15 @@ namespace LiftSimulator.Core.Models
                     Direction = null;
                 }
             }
+        }
 
-            // Let people off
-            foreach (var request in _requests.Where(req => !req.IsComplete()))
-            {
-                if (CurrentFloor == request.TargetFloorNumber)
-                {
-                    request.TickComplete = tick;
-                }
-            }
+        private void ServiceRequest(LiftRequest request, int tick)
+        {
+            request.TickServiced = tick;
 
-            if (_requests.All(req => req.IsComplete()))
-            {
-                // Stop moving if no more requests;
-                // We could move to the ground floor
-                Direction = null;
-            }
+            Direction = request.TargetFloorNumber > CurrentFloor
+                ? LiftDirection.Up
+                : LiftDirection.Down;
         }
 
         public string GetDirectionDescription()

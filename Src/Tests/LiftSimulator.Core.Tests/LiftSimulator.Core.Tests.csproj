@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="LiftLocatorTestFixture.cs" />
     <Compile Include="LiftRequestTestFixture.cs" />
+    <Compile Include="LiftTestFixture.cs" />
     <Compile Include="SimulationRunnerTestFixture.cs" />
     <Compile Include="TestDataHelper.cs" />
     <Compile Include="XUnitTestFixture.cs" />

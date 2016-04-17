@@ -42,7 +42,14 @@ namespace LiftSimulator.Core
 
             // Calculate the number of stops between the lift and the request because a lift with many stops will be slow
 
-            return Math.Abs(lift.CurrentFloor - request.SourceFloorNumber);
+            var otherStops = lift.GetRequests().Count(
+                req =>
+                    !req.IsComplete()
+                    &&
+                    ((lift.Direction == LiftDirection.Up && req.TargetFloorNumber < request.SourceFloorNumber) ||
+                     (lift.Direction == LiftDirection.Down && req.TargetFloorNumber > request.SourceFloorNumber)));
+
+            return Math.Abs(lift.CurrentFloor - request.SourceFloorNumber) + otherStops;
         }
     }
 }

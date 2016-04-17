@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using LiftSimulator.Core.Models;
 using Xunit;
 
@@ -100,6 +101,43 @@ namespace LiftSimulator.Core.Tests
             var result = locator.FindLiftForRequest(request, lifts);
 
             Assert.Null(result);
+        }
+
+        [Fact]
+        public void When_lift_A_is_same_as_B_and_has_other_stops_FindLift_returns_B()
+        {
+            var locator = new LiftLocator();
+            var request = new LiftRequest(5, 5, 10);
+
+            var liftA = new TestLift("A", 1, LiftDirection.Up);
+            var otherRequest = new LiftRequest(5, 3, 4)
+                               {
+                                   TickAssigned = 1,
+                                   TickServiced = 1
+                               };
+            liftA.AddTestLiftRequest(otherRequest);
+
+            var lifts = new[]
+                        {
+                            liftA,
+                            new Lift("B", 3, LiftDirection.Up)
+                        };
+
+            var result = locator.FindLiftForRequest(request, lifts);
+
+            Assert.True(result.Id == "B");
+        }
+    }
+
+    public class TestLift : Lift
+    {
+        public TestLift(string id, int currentFloor, LiftDirection? direction = null) : base(id, currentFloor, direction)
+        {
+        }
+
+        public void AddTestLiftRequest(LiftRequest request)
+        {
+            Requests.Add(request);
         }
     }
 }

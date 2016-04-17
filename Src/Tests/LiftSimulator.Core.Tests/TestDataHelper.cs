@@ -9,8 +9,8 @@ namespace LiftSimulator.Core.Tests
         {
             return new[]
                    {
-                       new Lift("A", 0),
-                       new Lift("B", 0)
+                       new Lift("A", 1),
+                       new Lift("B", 1)
                    };
         }
     }

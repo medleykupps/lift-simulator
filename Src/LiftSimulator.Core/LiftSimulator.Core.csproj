@@ -46,6 +46,7 @@
     <Compile Include="Models\Lift.cs" />
     <Compile Include="Models\LiftDirection.cs" />
     <Compile Include="Models\LiftRequest.cs" />
+    <Compile Include="Models\ServiceResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimulationContext.cs" />
     <Compile Include="SimulationResults.cs" />
