@@ -12,6 +12,14 @@ namespace LiftSimulator.Core.Models
             TargetFloorNumber = targetFloorNumber;
         }
 
+        public LiftRequest(int tick, int peopleCount, int sourceFloorNumber, int targetFloorNumber)
+        {
+            Tick = tick;
+            PeopleCount = peopleCount;
+            SourceFloorNumber = sourceFloorNumber;
+            TargetFloorNumber = targetFloorNumber;
+        }
+
         public int Tick { get; set; }
         public int? TickComplete { get; set; }
         public int? TickAssigned { get; set; }

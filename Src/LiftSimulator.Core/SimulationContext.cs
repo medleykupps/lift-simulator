@@ -21,5 +21,26 @@ namespace LiftSimulator.Core
 
         public IList<LiftRequest> Requests { get; set; }
         public IEnumerable<Lift> Lifts { get; set; }
+
+        public IEnumerable<Level> Levels
+        {
+            get
+            {
+                return
+                    from level in Enumerable.Range(Lift.MinimumFloor, Lift.MaximumFloor)
+                    let waiting = Requests.Where(req => req.SourceFloorNumber == level && !req.IsServiced()).Sum(req => req.PeopleCount)
+                    select new Level()
+                           {
+                               Number = level,
+                               Waiting = waiting
+                           };
+            }
+        }
+    }
+
+    public class Level
+    {
+        public int Number { get; set; }
+        public int Waiting { get; set; }
     }
 }

@@ -14,15 +14,55 @@
 <div class='page-content'>
     <header>
         <h1>Lift Simulator</h1>
-        <p class="by">by <span>Sam Medley</span></p>
     </header>
-    <div class='content'>
-
+    <div class='content' data-ng-app="lift-simulator" data-ng-controller="lift-controller">
+        <div class="main-panel">
+            <div class="levels">
+                <div data-ng-repeat="level in levels | reverse" class="level level-{{level.number}}">
+                    <div class="lift-operations">
+                        <span class="level-number">{{level.number}}</span>
+                        <input type="text" name="peopleCount" data-ng-model="level.peopleCount" class="people-count"/>
+                        <select name="target-floor" class="target-floor" data-ng-model="level.targetLevel">
+                            <option data-ng-repeat="optionLevel in level.targetLevels" value="{{optionLevel}}">{{optionLevel}}</option>
+                        </select>
+                        <button class="btn" data-ng-click="callLift(level.peopleCount, level.number, level.targetLevel)">Call</button>
+                        <span class="waiting-count">{{level.waitingCount}}</span>
+                        <span class="waiting">waiting</span>
+                    </div>
+                    <div class="lifts">
+                        <div data-ng-repeat="lift in lifts" class="lift lift-{{lift.Id}}" data-ng-class="getLiftCssClass(lift.Id, level.number)">
+                            <span class="capacity">{{lift.Capacity}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="lift-details">
+                <div data-ng-repeat="lift in lifts" class="lift-detail lift-details-{{lift.Id}}">
+                    <p>Lift {{lift.Id}}</p>
+                </div>
+            </div>
+        </div>
+        <aside class="side-panel">
+            <div class="log-messages">
+                <h3>Messages</h3>
+                <div data-ng-repeat="message in logs" class="log-item">
+                    <p>{{message}}</p>
+                </div>
+            </div>
+            <div class="simulator-operations">
+                <p class="ticks-message">Simulation Tick <span>{{tick}}</span></p>
+                <button class="btn btn-advance" data-ng-click="advance()">Advance</button>
+                <button class="btn btn-reset" data-ng-click="reset()">Reset</button>
+            </div>
+        </aside>
     </div>
     <footer>
         <p>&copy; Sam Medley 2016</p>
     </footer>
 </div>
     <script type="text/javascript" src="/Content/angular.min.js"></script>
+    <script type="text/javascript" src="/Content/underscore-min.js"></script>
+    @*<script type="text/javascript" src="/Content/app.es5.min.js"></script>*@
+    <script type="text/javascript" src="/Content/app.es5.js"></script>
 </body>
 </html>

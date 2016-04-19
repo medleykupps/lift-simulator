@@ -40,6 +40,8 @@ namespace LiftSimulator.Core.Models
             return Requests.Where(req => req.IsServiced() && !req.IsComplete()).Sum(req => req.PeopleCount);
         }
 
+        public int Capacity => GetCapacity();
+
         public bool IsFull()
         {
             return GetCapacity() >= MaximumCapacity;

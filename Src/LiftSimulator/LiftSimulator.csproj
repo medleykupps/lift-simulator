@@ -102,12 +102,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\angular.min.js" />
+    <Content Include="Content\app.es5.js">
+      <DependentUpon>app.js</DependentUpon>
+    </Content>
+    <Content Include="Content\app.es5.min.js">
+      <DependentUpon>app.es5.js</DependentUpon>
+    </Content>
+    <Content Include="Content\app.js" />
+    <Content Include="Content\images\direction-down.png" />
+    <Content Include="Content\images\direction-up.png" />
     <Content Include="Content\site.css">
       <DependentUpon>site.less</DependentUpon>
     </Content>
     <Content Include="Content\site.min.css">
       <DependentUpon>site.css</DependentUpon>
     </Content>
+    <Content Include="Content\underscore-min.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -115,6 +126,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SimulationApiController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -139,6 +151,12 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LiftSimulator.Core\LiftSimulator.Core.csproj">
+      <Project>{2E7A1AB8-3495-4895-846F-9A2816EDAFDA}</Project>
+      <Name>LiftSimulator.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
