@@ -48,8 +48,13 @@
 
     app.controller = app.controller('lift-controller', ['$http', '$scope', function ($http, $scope) {
 
+        $scope.tick = 0;
         $scope.levelCount = 10;
         $scope.levels = [];
+        $scope.lifts = [];
+        $scope.log = [];
+
+        // Initialise the list of levels
         for (var idx = 1; idx <= $scope.levelCount; idx++) {
             var targetLevels = [];
             for (var targetIdx = 1; targetIdx <= $scope.levelCount; targetIdx++) {
@@ -63,18 +68,6 @@
                 targetLevels: targetLevels
             });
         }
-
-        $scope.lifts = [];
-        $scope.log = [];
-
-        $scope.tick = 0;
-        //$http.get('/api/v1/simulator/ticks/' + $scope.tick)
-        //    .success(function(response) {
-        //        console.log(response);
-        //        $scope.lifts = response.Context.Lifts;
-        //    });
-
-        $scope.requests = [];
 
         $scope.advance = function () {
             $scope.tick++;
@@ -97,10 +90,16 @@
                 console.log(response);
                 $scope.lifts = response.Context.Lifts;
                 $scope.tick = 0;
+                _.each(response.Context.Levels, function (responseLevel) {
+                    var level = _.find($scope.levels, function (l) {
+                        return l.number && l.number === responseLevel.Number;
+                    });
+                    if (level) {
+                        level.waitingCount = responseLevel.Waiting;
+                    }
+                });
             });
         };
-
-        $scope.reset();
 
         $scope.getLiftCssClass = function (liftId, level) {
             var lift = _.find($scope.lifts, function (l) {
@@ -120,6 +119,9 @@
         };
 
         $scope.callLift = function (peopleCount, sourceFloorNumber, targetFloorNumber) {
+            if (peopleCount <= 0 || sourceFloorNumber < 1 || targetFloorNumber < 1) {
+                return;
+            }
             var level = _.find($scope.levels, function (l) {
                 return l.number === sourceFloorNumber;
             });
@@ -140,6 +142,8 @@
                 });
             }
         };
+
+        $scope.reset();
     }]);
 
     app.filter('reverse', function () {
