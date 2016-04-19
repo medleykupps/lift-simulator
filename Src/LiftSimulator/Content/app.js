@@ -51,7 +51,7 @@
             $scope.levelCount = 10;
             $scope.levels = [];
             $scope.lifts = [];
-            $scope.log = [];
+            $scope.summaryItems = [];
 
             // Initialise the list of levels
             for (var idx = 1; idx <= $scope.levelCount; idx++) {
@@ -74,6 +74,11 @@
                     .success(function (response) {
                         console.log(response);
                         $scope.lifts = response.Context.Lifts;
+                        if (response.SummaryItems && response.SummaryItems.length) {
+                            _.each(response.SummaryItems, function(summaryItem) {
+                                $scope.summaryItems.push(summaryItem);
+                            });
+                        }
                         _.each(response.Context.Levels, function(responseLevel) {
                             var level = _.find($scope.levels, function(l) { return l.number && l.number === responseLevel.Number; });
                             if (level) {
@@ -105,7 +110,7 @@
                         return {
                             active: true,
                             up: lift.Direction === 0,
-                            down: lift.Direction === -1,
+                            down: lift.Direction === 1,
                             stopped: lift.Direction === null
                         };
                     }

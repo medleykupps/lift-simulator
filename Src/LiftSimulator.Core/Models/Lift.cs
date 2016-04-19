@@ -51,12 +51,16 @@ namespace LiftSimulator.Core.Models
         {
             var result = new ServiceResult();
 
+            var peopleOffCount = 0;
+            var peopleOnCount = 0;
+
             foreach (var request in Requests.Where(req => !req.IsComplete()))
             {
                 if (request.IsServiced() && CurrentFloor == request.TargetFloorNumber)
                 {
                     // Drop people off at this floor
                     request.TickComplete = tick;
+                    peopleOffCount += request.PeopleCount;
                 }
 
                 if (request.IsAssigned() && !request.IsServiced() && CurrentFloor == request.SourceFloorNumber)
@@ -67,6 +71,7 @@ namespace LiftSimulator.Core.Models
                     if (GetCapacity() + request.PeopleCount <= MaximumCapacity)
                     {
                         ServiceRequest(request, tick);
+                        peopleOnCount += request.PeopleCount;
                     }
                     else
                     {
@@ -77,8 +82,18 @@ namespace LiftSimulator.Core.Models
 
                         request.PeopleCount = roomInLift;
                         ServiceRequest(request, tick);
+                        peopleOnCount += request.PeopleCount;
                     }
                 }
+            }
+
+            if (peopleOnCount > 0)
+            {
+                result.SummaryItems.Add(CreateSummaryItem(tick, LiftAction.GetOn, peopleOnCount));
+            }
+            if (peopleOffCount > 0)
+            {
+                result.SummaryItems.Add(CreateSummaryItem(tick, LiftAction.GetOff, peopleOffCount));
             }
 
             if (Requests.All(req => req.IsComplete()))
@@ -89,6 +104,23 @@ namespace LiftSimulator.Core.Models
             }
 
             return result;
+        }
+
+        private SummaryItem CreateSummaryItem(int tick, LiftAction action, int peopleCount)
+        {
+            var desc = peopleCount == 1 ? "person" : "people";
+            var actionDesc = action == LiftAction.GetOff ? "got off" : "got on";
+
+            return new SummaryItem
+                   {
+                       Tick = tick,
+                       Action = action,
+                       ActionDesc = actionDesc,
+                       Level = CurrentFloor,
+                       LiftId = Id,
+                       PeopleCount = peopleCount,
+                       Message = $"{peopleCount} {desc} {actionDesc} Lift {Id} on Level {CurrentFloor}"
+                   };
         }
 
         public void Move()

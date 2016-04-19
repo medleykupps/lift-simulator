@@ -92,11 +92,6 @@ namespace LiftSimulator.Core
                     lift.Move();
                 }
 
-                foreach (var lift in context.Lifts)
-                {
-                    summary.Message.Add($"Lift '{lift.Id}' is at {lift.CurrentFloor}, {lift.GetDirectionDescription()}, with {lift.GetCapacity()} people");
-                }
-
                 results.Summaries.Add(summary);
             }
 
@@ -129,17 +124,16 @@ namespace LiftSimulator.Core
                     {
                         Context.Requests.Add(remaining);
                     }
+                    foreach (var summaryItem in result.SummaryItems)
+                    {
+                        summary.Items.Add(summaryItem);
+                    }
                 }
             }
 
             foreach (var lift in Context.Lifts)
             {
                 lift.Move();
-            }
-
-            foreach (var lift in Context.Lifts)
-            {
-                summary.Message.Add($"Lift '{lift.Id}' is at {lift.CurrentFloor}, {lift.GetDirectionDescription()}, with {lift.GetCapacity()} people");
             }
 
             summary.Context = Context;

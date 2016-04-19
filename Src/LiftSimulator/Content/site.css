@@ -148,8 +148,22 @@ p {
   border: solid 1px transparent;
   text-align: center;
 }
-.content .log-messages {
+.content .summary-items {
   min-height: 128px;
+}
+.content .summary-items .summary-items-container {
+  height: 500px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.content .summary-items .summary-items-container .summary-item p {
+  color: #666;
+}
+.content .summary-items .summary-items-container .summary-item .lift,
+.content .summary-items .summary-items-container .summary-item .level,
+.content .summary-items .summary-items-container .summary-item .people-count {
+  color: #333;
+  font-weight: bold;
 }
 .content .simulator-operations {
   position: absolute;

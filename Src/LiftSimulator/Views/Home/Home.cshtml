@@ -47,10 +47,14 @@
             </div>
         </div>
         <aside class="side-panel">
-            <div class="log-messages">
+            <div class="summary-items">
                 <h3>Messages</h3>
-                <div data-ng-repeat="message in logs" class="log-item">
-                    <p>{{message}}</p>
+                <div class="summary-items-container">
+                    <div data-ng-repeat="item in summaryItems | reverse" class="summary-item">
+                        <p>
+                            <span class="tick">{{item.Tick}}</span>: <span class="people-count">{{item.PeopleCount}}</span> people {{item.ActionDesc}} <span class="lift">Lift {{item.LiftId}}</span> on <span class="level">Level {{item.Level}}</span>
+                        </p>
+                    </div>
                 </div>
             </div>
             <div class="simulator-operations">

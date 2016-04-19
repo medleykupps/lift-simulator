@@ -30,7 +30,8 @@ namespace LiftSimulator.Controllers
             var result = new UpdateResult
                          {
                              Tick = tick,
-                             Context = summary.Context
+                             Context = summary.Context,
+                             SummaryItems = summary.Items
                          };
 
             return Ok(result);
@@ -68,5 +69,6 @@ namespace LiftSimulator.Controllers
     {
         public int Tick { get; set; }
         public SimulationContext Context { get; set; }
+        public IEnumerable<SummaryItem> SummaryItems { get; set; }
     }
 }
