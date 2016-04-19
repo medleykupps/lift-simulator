@@ -125,8 +125,11 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Models\CreateLiftRequest.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SimulationApiController.cs" />
+    <Compile Include="Models\UpdateCommand.cs" />
+    <Compile Include="Models\UpdateResult.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -150,7 +153,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LiftSimulator.Core\LiftSimulator.Core.csproj">

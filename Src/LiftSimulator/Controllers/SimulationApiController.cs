@@ -1,13 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Configuration;
 using System.Web.Http;
 using LiftSimulator.Core;
-using LiftSimulator.Core.Models;
+using LiftSimulator.Models;
 
 namespace LiftSimulator.Controllers
 {
     [RoutePrefix("api/v1/simulator")]
     public class SimulationApiController : ApiController
     {
+        private IRepository _repository;
+
         [HttpPost]
         [Route("request-lift")]
         public IHttpActionResult RequestLift([FromBody] CreateLiftRequest request)
@@ -26,6 +29,10 @@ namespace LiftSimulator.Controllers
         public IHttpActionResult GetSimulationTick([FromUri] int tick)
         {
             var summary = SimulationRunner.Instance.UpdateSimulationTick(tick);
+            if (summary != null)
+            {
+                CommitSummaryToDatabase(summary);
+            }
 
             var result = new UpdateResult
                          {
@@ -42,6 +49,7 @@ namespace LiftSimulator.Controllers
         public IHttpActionResult Reset()
         {
             var context = SimulationRunner.Instance.Reset();
+            Repository.ResetSummaryItems();
             var result = new UpdateResult
             {
                 Context = context
@@ -49,26 +57,36 @@ namespace LiftSimulator.Controllers
             return Ok(result);
         }
 
-    }
+        private void CommitSummaryToDatabase(TickSummary summary)
+        {
+            if (summary.Items != null)
+            {
+                foreach (var item in summary.Items)
+                {
+                    Repository.AddSummaryItem(item);
+                }
+            }
+        }
 
-    public class CreateLiftRequest
-    {
-        public int Tick { get; set; }
-        public int PeopleCount { get; set; }
-        public int SourceFloorNumber { get; set; }
-        public int TargetFloorNumber { get; set; }
-    }
+        protected IRepository Repository
+        {
+            get
+            {
+                if (_repository != null)
+                {
+                    return _repository;
+                }
 
-    public class UpdateCommand
-    {
-        public int Tick { get; set; }
-        public IEnumerable<LiftRequest> Requests { get; set; }
-    }
+                var connectionString = ConfigurationManager.ConnectionStrings["LiftSimulator"];
+                if (connectionString == null)
+                {
+                    throw new ApplicationException("Missing connection string for LiftSimulator db");
+                }
 
-    public class UpdateResult
-    {
-        public int Tick { get; set; }
-        public SimulationContext Context { get; set; }
-        public IEnumerable<SummaryItem> SummaryItems { get; set; }
+                _repository = new Repository(connectionString.ConnectionString);
+
+                return _repository;
+            }
+        }
     }
 }

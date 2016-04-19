@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ILiftLocator.cs" />
+    <Compile Include="IRepository.cs" />
     <Compile Include="ISimulationRunner.cs" />
     <Compile Include="LiftLocator.cs" />
     <Compile Include="Models\Lift.cs" />
@@ -48,6 +49,7 @@
     <Compile Include="Models\LiftRequest.cs" />
     <Compile Include="Models\ServiceResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository.cs" />
     <Compile Include="SimulationContext.cs" />
     <Compile Include="SimulationResults.cs" />
     <Compile Include="SimulationRunner.cs" />
