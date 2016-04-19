@@ -94,6 +94,7 @@
                         console.log(response);
                         $scope.lifts = response.Context.Lifts;
                         $scope.tick = 0;
+                        $scope.summaryItems = [];
                         _.each(response.Context.Levels, function (responseLevel) {
                             var level = _.find($scope.levels, function (l) { return l.number && l.number === responseLevel.Number; });
                             if (level) {
